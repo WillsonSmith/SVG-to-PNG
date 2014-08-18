@@ -12,8 +12,11 @@
 	function handleFileSelect(evt) {
 
 		var files = evt.target.files;
+		var f;
 
-		for (var i = 0, f; f = files[i]; i++) {
+		for (var i = 0; i < files.length; i++) {
+			
+			f = files[i];
 
 			var reader = new FileReader(),
 				results = [];
@@ -28,9 +31,6 @@
 						theFile,
 						newImage = new Image();
 
-		//newImage.src = 'svg/img.svg';
-
-					//ctx.drawImage(e.target.result, 0, 0);
 					img.src = e.target.result;
 
 
@@ -41,65 +41,24 @@
 						ctx.drawImage(img, 0, 0);
 
 						newImage.src = canvas.toDataURL('image/png');
-						//newImage.src = 'svg/img.svg';
-
-						/*
-						var x = document.createElement('p');
-						x.textContent = escape(dataURL);
-						document.getElementById('container').appendChild(x);*/
 
 					};
 
-
-
-					//img.src = e.target.result;
 					newImage.onload = function(){
 
 						document.getElementById('container').appendChild(newImage);
 						var dataURL = newImage.src.replace(/^data:image\/(png|jpg);base64,/, "");
 						var zip = new JSZip();
 
-						//zip.file("Hello.txt", "Hello World\n"); //replace with css
-
 						var img = zip.folder("images");
 						img.file("image.png", dataURL, {base64: true});
 						var content = zip.generate();
 						document.getElementById('download').href = "data:application/zip;base64,"+content;
-						//location.href="data:application/zip;base64,"+content;
 
 					};
 
-
-
-
-
-					//console.log(theFile);
-
-
-					//onsole.log(canvas.toDataURL('image/png'));
-
-
 					frag.appendChild(canvas);
 					document.getElementById('container').appendChild(frag);
-
-
-					/*var source = document.getElementById('theSrc');
-					results.push(e.target.result);
-
-					if ( results.length === 1 ){
-
-						source.setAttribute('src', e.target.result);
-						source.parentNode.load();
-
-					}else{
-
-						console.log(results.length);
-
-					}*/
-					//console.log(img);
-					//canvg('canvas', e.target);
-
-
 
 				};
 
