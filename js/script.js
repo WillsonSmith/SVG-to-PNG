@@ -1,27 +1,54 @@
 (function(){
 
 	var frag = document.createDocumentFragment('frag'),
-		canvas = document.createElement('canvas'),
-		ctx = canvas.getContext('2d'),
-		can2 = document.createElement('canvas'),
-		can2ctx = can2.getContext('2d'),
-		img = new Image();
 
+			imageCont = document.getElementById('images');
 
+		var canvas = document.createElement('canvas'),
+				ctx = canvas.getContext('2d');
+
+		var count = 0;
 
 	function handleFileSelect(evt) {
 
-		var files = evt.target.files;
-		var f;
+		var files = evt.target.files,
+				f;
+
+				count = files.length;
 
 		for (var i = 0; i < files.length; i++) {
-			
+
 			f = files[i];
 
-			var reader = new FileReader(),
-				results = [];
+			var reader = new FileReader();
 
-			reader.onload = (function(theFile) {
+			reader.addEventListener('load', function(theFile) {
+
+				var svgSource = theFile.target.result,
+						img = document.createElement('img');
+
+				img.src = svgSource;
+
+				canvas.height = img.height;
+				canvas.width = img.width;
+
+				ctx.drawImage(img, 0, 0);
+
+				img.src = canvas.toDataURL('image/png');
+				console.log(img.src);
+
+				frag.appendChild(img);
+
+				if (i === count) {
+
+					imageCont.appendChild(frag);
+
+				}
+
+
+			}, false);
+
+			/*reader.onload = (function(theFile) {
 
 				return function(e) {
 
@@ -62,9 +89,10 @@
 
 				};
 
-			})(f);
+			})(f);*/
 
 			reader.readAsDataURL(f);
+			console.log(images);
 		}
 	}
 
