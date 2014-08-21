@@ -40,11 +40,11 @@
 					}
 				}
 			}
-	
+
 	function list(theFile) {
 
 		var svgSource = theFile.target.result;
-		console.log(arguments);
+		
 		items.push(svgSource);
 
 		listItems(count);
