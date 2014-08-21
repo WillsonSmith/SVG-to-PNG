@@ -3,7 +3,6 @@
 	var frag = document.createDocumentFragment('frag'),
 			imageCont = document.getElementById('images');
 
-
 		var count = 0;
 
 		var items = [];
@@ -17,6 +16,7 @@
 
 				if (items.length === number) {
 					for (var i = 0, l = items.length; i < l; i++) {
+
 						img = document.createElement('img');
 						cv = document.createElement('canvas');
 						ctx = cv.getContext('2d');
@@ -40,6 +40,15 @@
 					}
 				}
 			}
+	
+	function list(theFile) {
+
+		var svgSource = theFile.target.result;
+		console.log(arguments);
+		items.push(svgSource);
+
+		listItems(count);
+	}
 
 	function handleFileSelect(evt) {
 
@@ -54,16 +63,10 @@
 
 			var reader = new FileReader();
 
-			reader.addEventListener('load', function(theFile) {
-
-				var svgSource = theFile.target.result;
-
-				items.push(svgSource);
-
-			listItems(count);
-			}, false);
+			reader.addEventListener('load',list, false);
 
 			reader.readAsDataURL(f);
+
 		}
 
 	}
